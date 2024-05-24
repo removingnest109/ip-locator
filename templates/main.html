@@ -1,15 +1,35 @@
 <!DOCTYPE html>
-
-<head>
-
-    <title>actix htmx</title>
-
+<html>
+  
+  <head>
+    <title>IP Locator</title>
     <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  
+  <body>
+    
+    <header>
+      <h1>IP Locator</h1>
+    </header>
 
-</head>
+    <main>
+      <div class="container">
+	<p>IP: <span id="ip">{{ ip_info.ip }}</span></p>
+	<p>Location: <span id="location">{{ ip_info.city }}, {{ ip_info.region }}, {{ ip_info.country }}</span></p>
+	<p>Hostname: <span id="hostname">{{ ip_info.hostname }}</span></p>
+	<p>GPS: <span id="gps">{{ ip_info.loc }}</span></p>
+	<p>Organization: <span id="org">{{ ip_info.org }}</span></p>
+	<p>Postal Code: <span id="postal">{{ ip_info.postal }}</span></p>
+	<p>Time Zone: <span id="timezone">{{ ip_info.timezone }}</span></p>
+      </div>
+    </main>
 
-<body>
-
-<h1>Hello World</h1>
-
-</body>
+    <footer>
+      <a href="https://github.com/removingnest109/actix_htmx">View the source code for this website</a>
+    </footer>
+    
+  </body>
+</html>
