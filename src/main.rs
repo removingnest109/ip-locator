@@ -1,7 +1,8 @@
-use actix_web::{get, web::Data, HttpResponse, App, Responder};
+use actix_web::{post, get, web, web::Data, HttpResponse, App, Responder};
 use tera::{Tera, Context};
 use serde_json::Value;
 use reqwest::Client;
+use std::collections::HashMap;
 
 #[get("/")]
 async fn home(tera: Data<Tera>) -> impl Responder {
@@ -16,10 +17,37 @@ async fn home(tera: Data<Tera>) -> impl Responder {
 
     let ip_info: Value = serde_json::from_slice(response.as_bytes()).unwrap();
     
-    let mut context = Context::new();
-    context.insert("ip_info", &ip_info);
+    let mut home_context = Context::new();
+    home_context.insert("ip_info", &ip_info);
 
-    HttpResponse::Ok().body(tera.render("main.html", &context).unwrap())
+    HttpResponse::Ok().body(tera.render("main.html", &home_context).unwrap())
+}
+
+#[get("/search_ip")]
+async fn search_ip(ip: web::Query<HashMap<String, String>>, tera: Data<Tera>) -> impl Responder {
+    let ip_address = {
+        if let Some(ip) = ip.get("ip") {
+            ip.to_string()
+        } else {
+            String::new()
+        }
+    };
+    
+    let client = Client::new();
+    let response = client.get(format!("https://ipinfo.io/{}/json?token=f550d475270a11", &ip_address))
+        .send()
+        .await
+        .unwrap()
+        .text()
+        .await
+        .unwrap();
+
+    let ip_info: Value = serde_json::from_slice(response.as_bytes()).unwrap();
+
+    let mut search_ip_context = Context::new();
+    search_ip_context.insert("ip_info", &ip_info);
+
+    HttpResponse::Ok().body(tera.render("components/search_results.html", &search_ip_context).unwrap())
 }
 
 #[actix::main]
@@ -33,6 +61,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(tera.clone())
 	    .service(actix_files::Files::new("/css", "./css").show_files_listing())
+	    .service(search_ip)
             .service(home)
     })
 	.bind(("127.0.0.1", 8000))?
