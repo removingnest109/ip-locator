@@ -7,7 +7,7 @@ use std::collections::HashMap;
 #[get("/")]
 async fn home(tera: Data<Tera>) -> impl Responder {
     let client = Client::new();
-    let response = client.get("https://ipinfo.io/json?token=f550d475270a11")
+    let response = client.get("https://ipinfo.io/json")
         .send()
         .await
         .unwrap()
@@ -34,7 +34,7 @@ async fn search_ip(ip: web::Query<HashMap<String, String>>, tera: Data<Tera>) ->
     };
     
     let client = Client::new();
-    let response = client.get(format!("https://ipinfo.io/{}/json?token=f550d475270a11", &ip_address))
+    let response = client.get(format!("https://ipinfo.io/{}/json", &ip_address))
         .send()
         .await
         .unwrap()
