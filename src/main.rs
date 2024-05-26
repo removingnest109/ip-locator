@@ -1,4 +1,4 @@
-use actix_web::{post, get, web, web::Data, HttpResponse, App, Responder};
+use actix_web::{get, web, web::Data, HttpResponse, App, Responder};
 use tera::{Tera, Context};
 use serde_json::Value;
 use reqwest::Client;
