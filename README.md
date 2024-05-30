@@ -31,3 +31,13 @@ To install into ~/.cargo/bin/
 ```bash
 cargo install --path .
 ```
+
+## Installation (Docker)
+Pull the image from docker hub
+```bash
+docker pull removingnest109/iplocator:latest
+```
+Run the image in a new container
+```bash
+docker run -p 8000:8000 removingnest109/iplocator:latest
+```
