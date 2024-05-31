@@ -47,3 +47,7 @@ docker pull removingnest109/iplocator:latest
 ```bash
 docker run -p 8000:8000 removingnest109/iplocator:latest
 ```
+
+## Todo
+ - [ ] Add map view for geolocation
+ 
