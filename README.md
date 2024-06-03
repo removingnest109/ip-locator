@@ -1,5 +1,5 @@
 # ip-locator
-ip-locator is a web app meant to be a rust/htmx clone of whatismyip.com
+ip-locator is a web app meant to be a simple rust/htmx clone of whatismyip.com
 
 ## Usage
 The app will be hosted on port 8000, and can be accessed from a web browser. 
